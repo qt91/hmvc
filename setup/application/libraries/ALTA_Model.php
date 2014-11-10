@@ -13,7 +13,7 @@ class ALTA_Model extends CI_Model
 
     /**
     * ================================================================================================================================
-    * Get data user form IDzzzzzz
+    * Get data user form ID
     * @param id: ID cần select
     * @param bool $flag -Nếu bằng 0 trả về True/False
     *                  - Nếu bằng 1 trả về ID hoặc False
@@ -35,6 +35,34 @@ class ALTA_Model extends CI_Model
             }
         }
         return false;
+    }
+
+    /**
+    * ================================================================================================================================
+    * Select where
+    * @param string $where Tên field
+    * @param string $value Giá trị cho field trên
+    * @param string $specified biểu thức so sánh
+    * @param bool $flag -Nếu bằng 0 trả về True/False
+    *                  - Nếu bằng 1 trả về ID hoặc False
+    *                  - Nếu bằng 2 trả về Dữ liệu hoặc False
+    */
+    function select_where($where, $value,$specified = '=', $flag){
+        $sql = "SELECT * FROM $this->tbl WHERE $where $specified ?";
+        $query = $this->db->query($sql, array($value));
+
+        if($query->num_rows() > 0){
+            if($flag == 0){
+                return true;
+            }elseif($flag == 1){
+                $data = $query->row(0,'array'); 
+                return $data[$this->id];
+            }elseif($flag == 2){
+                return $query->row(0,'array');
+            }
+        }
+        return false;
+
     }
 
     /**
@@ -93,9 +121,7 @@ class ALTA_Model extends CI_Model
         return false;
     }
 
-
-
-    //============DANH RIENG
+    //============DANH RIENG============================================================
     function get_from_connect_id($connect_id){
         $sql = "SELECT * FROM $this->tbl WHERE query_id = ?";
         $query = $this->db->query($sql,array($connect_id));
