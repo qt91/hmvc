@@ -13,7 +13,7 @@ class ALTA_Model extends CI_Model
 
     /**
     * ================================================================================================================================
-    * Get data user form ID
+    * Get data user form IDzzzzzz
     * @param id: ID cần select
     * @param bool $flag -Nếu bằng 0 trả về True/False
     *                  - Nếu bằng 1 trả về ID hoặc False
